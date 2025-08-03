@@ -1,0 +1,1810 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Use of Digital Media Platforms in Education - Apoorva Agnihotri
+    </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-dark-navy: #0a0f1e;
+        --bg-glass: rgba(15, 20, 38, 0.6);
+        --border-glow: rgba(0, 191, 255, 0.3);
+        --text-primary: #d1d5db;
+        --text-secondary: #9ca3af;
+        --accent-cyan: #00bfff;
+        --accent-magenta: #ff00ff;
+        --accent-gold: #ffd700;
+      }
+
+      html {
+        font-size: clamp(13px, 1.2vw, 18px);
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--bg-dark-navy);
+        color: var(--text-primary);
+        overflow: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* --- NEW: Particle Background Canvas --- */
+      #particle-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2; /* Behind the grid overlay */
+      }
+
+      #grid-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(
+            rgba(0, 191, 255, 0.05) 1px,
+            transparent 1px
+          ),
+          linear-gradient(90deg, rgba(0, 191, 255, 0.05) 1px, transparent 1px);
+        background-size: 50px 50px;
+        z-index: -1;
+        animation: panGrid 60s linear infinite;
+      }
+
+      .logo-wrapper {
+        display: inline-block;
+        padding: 12px;
+        border: 2px solid #00bfff;
+        border-radius: 12px;
+        background: rgba(0, 191, 255, 0.05);
+        box-shadow: 0 0 18px rgba(0, 191, 255, 0.6);
+        transform: scale(1.05);
+        box-shadow: 0 0 28px rgba(0, 191, 255, 0.9);
+        transition: all 0.3s ease;
+        margin-bottom: 10px;
+      }
+
+      .logo-img {
+        height: 90px;
+        max-height: 7rem;
+        display: block;
+      }
+
+      @keyframes panGrid {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: 100px 100px;
+        }
+      }
+
+      main {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      }
+
+      .slide {
+        flex: 0 0 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        box-sizing: border-box;
+      }
+
+      .slide-content {
+        background: var(--bg-glass);
+        border: 1px solid var(--border-glow);
+        box-shadow: 0 0 50px rgba(0, 191, 255, 0.1);
+        backdrop-filter: blur(20px);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        width: clamp(320px, 90vw, 1600px);
+        height: min(90vh, 950px);
+        max-height: 100%;
+        border-radius: 1.25rem;
+      }
+
+      .full-width-list .data-card,
+      .full-width-list-no-scroll .data-card {
+        height: auto !important;
+        min-height: 60px;
+        max-height: fit-content;
+        padding: 0.8rem 1rem;
+        margin-bottom: 0.6rem;
+      }
+
+      .slide-header {
+        padding: 1.5rem 3rem;
+        border-bottom: 1px solid var(--border-glow);
+        flex-shrink: 0;
+      }
+
+      .slide-header h2 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.5rem, 3vw, 3rem);
+        font-weight: 800;
+        color: white;
+        text-shadow: 0 0 15px var(--accent-cyan);
+      }
+
+      .slide-body {
+        padding: 2rem 3rem;
+        flex-grow: 1;
+        overflow-y: auto;
+      }
+      .slide-body .grid .reveal-element {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        height: 100%;
+      }
+
+      .slide-body .grid .reveal-element h3 {
+        min-height: 3.5rem;
+        display: flex;
+        align-items: center;
+        text-align: center;
+      }
+
+      .slide-body .grid .reveal-element p.text-secondary {
+        flex-grow: 1;
+        text-align: center;
+      }
+
+      .slide-body.no-scroll {
+        overflow-y: hidden;
+      }
+
+      .slide-body::-webkit-scrollbar {
+        width: 8px;
+      }
+      .slide-body::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .slide-body::-webkit-scrollbar-thumb {
+        background: var(--border-glow);
+        border-radius: 10px;
+      }
+
+      .slide-footer {
+        padding: 1rem 3rem;
+        border-top: 1px solid var(--border-glow);
+        font-size: 0.9rem;
+        color: var(--accent-cyan);
+        display: flex;
+        justify-content: space-between;
+        flex-shrink: 0;
+      }
+
+      .nav-buttons {
+        position: fixed;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        display: flex;
+        gap: 1rem;
+        background: var(--bg-glass);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        border: 1px solid var(--border-glow);
+      }
+
+      .nav-btn {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        background: transparent;
+        border: 1px solid var(--accent-cyan);
+        color: var(--accent-cyan);
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .nav-btn:hover:not(:disabled) {
+        background: var(--accent-cyan);
+        color: var(--bg-dark-navy);
+        box-shadow: 0 0 20px var(--accent-cyan);
+      }
+      .nav-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+
+      .data-card {
+        background: rgba(0, 191, 255, 0.05);
+        border: 1px solid var(--border-glow);
+        padding: 1rem;
+        border-radius: 10px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .bullet-list li,
+      .slide-body ul.bullet-list li {
+        position: relative;
+        padding-left: 2rem;
+        margin-bottom: 1rem;
+        font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+        line-height: 1.6;
+      }
+
+      .bullet-list.compact li {
+        font-size: clamp(0.8rem, 1.2vw, 1rem);
+        line-height: 1.5;
+        margin-bottom: 0.75rem;
+      }
+
+      .bullet-list li::before {
+        content: "✣";
+        position: absolute;
+        left: 6px;
+        top: -5px;
+        color: var(--accent-cyan);
+        font-size: 1.3em;
+        text-shadow: 0 0 8px var(--accent-cyan);
+      }
+
+      .counter-value {
+        font-family: "Inter", sans-serif;
+        font-weight: 800;
+        color: white;
+        text-shadow: 0 0 10px var(--accent-cyan);
+      }
+
+      .chart-container svg {
+        overflow: visible;
+      }
+
+      .reveal-text,
+      .reveal-element {
+        opacity: 0;
+      }
+      .core-term-row {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 0.4rem;
+        text-align: left;
+        width: 100%;
+      }
+      .core-term-key::after {
+        content: ":";
+        padding-right: 0.4rem;
+      }
+
+      .core-term-key {
+        display: inline-block;
+        min-width: 160px;
+        font-weight: 600;
+      }
+
+      .core-term-value {
+        flex: 1;
+        word-break: break-word;
+      }
+      /* ═══ SIDEBAR STYLES — cyan accent only ═══ */
+
+      /* HAMBURGER BUTTON */
+      #sidebar-toggle {
+        position: fixed;
+        top: 1.5rem;
+        left: 1.5rem;
+        z-index: 102;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg-glass);
+        border: 1px solid rgba(45, 212, 191, 0.4); /* cyan glow */
+        color: var(--accent-cyan);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      #sidebar-toggle:hover {
+        background: var(--accent-cyan);
+        color: var(--bg-dark-navy);
+        box-shadow: 0 0 20px var(--accent-cyan);
+      }
+
+      /* SLIDING PANEL */
+      #sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 320px;
+        height: 100vh;
+        background: var(--bg-dark-navy);
+        border-right: 1px solid rgba(45, 212, 191, 0.4);
+        transform: translateX(-100%);
+        transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        z-index: 101;
+        display: flex;
+        flex-direction: column;
+      }
+      #sidebar.visible {
+        transform: translateX(0);
+      }
+
+      /* PANEL HEADER */
+      .sidebar-header {
+        padding: 1.5rem;
+        font: 700 1.5rem "Cormorant Garamond", serif;
+        color: #fff;
+        text-align: center;
+        border-bottom: 1px solid rgba(45, 212, 191, 0.4);
+      }
+
+      /* SLIDE LIST */
+      #sidebar-list {
+        margin: 0;
+        padding: 1rem 0;
+        list-style: none;
+        overflow-y: auto;
+        flex-grow: 1;
+      }
+      #sidebar-list li {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.75rem 1.5rem;
+        cursor: pointer;
+        border-bottom: 1px solid rgba(45, 212, 191, 0.1);
+        transition: background-color 0.2s ease;
+      }
+      #sidebar-list li:hover {
+        background: var(--bg-glass);
+      }
+      #sidebar-list li.active {
+        background: var(--accent-cyan);
+        color: var(--bg-dark-navy);
+        font-weight: 600;
+      }
+
+      /* NUMBER - THUMB - TITLE */
+      .slide-number {
+        min-width: 20px;
+        font-weight: 700;
+        color: var(--accent-cyan);
+      }
+      #sidebar-list li.active .slide-number {
+        color: var(--bg-dark-navy);
+      }
+
+      .slide-thumbnail {
+        width: 96px;
+        height: 54px;
+        flex-shrink: 0;
+        border-radius: 4px;
+        overflow: hidden;
+        border: 1px solid rgba(45, 212, 191, 0.4);
+        background: rgba(0, 0, 0, 0.2);
+      }
+      #sidebar-list li.active .slide-thumbnail {
+        border-color: var(--bg-dark-navy);
+        box-shadow: 0 0 8px var(--accent-cyan);
+      }
+
+      .slide-title {
+        font-size: 0.9rem;
+        line-height: 1.3;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+
+        -webkit-box-orient: vertical;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- REMOVED Aurora background and ADDED new particle canvas -->
+    <canvas id="particle-background"></canvas>
+    <div id="grid-overlay"></div>
+
+    <main id="presentation-container">
+      <!-- SLIDES WILL BE POPULATED HERE BY JAVASCRIPT -->
+    </main>
+
+    <button id="sidebar-toggle" aria-label="Toggle slide navigation">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+
+    <!-- — SIDEBAR — -->
+    <aside id="sidebar">
+      <div class="sidebar-header">Slides</div>
+      <ul id="sidebar-list"></ul>
+    </aside>
+
+    <div class="nav-buttons">
+      <button
+        id="prevBtn"
+        class="nav-btn"
+        title="Previous Slide"
+        aria-label="Previous Slide"
+      >
+        ‹
+      </button>
+      <button
+        id="nextBtn"
+        class="nav-btn"
+        title="Next Slide"
+        aria-label="Next Slide"
+      >
+        ›
+      </button>
+    </div>
+
+    <script>
+      const sidebarList = document.getElementById("sidebar-list");
+
+      function highlightSlide(idx) {
+        sidebarList.querySelectorAll("li").forEach((li, i) => {
+          li.classList.toggle("active", i === idx);
+        });
+      }
+      // --- NEW: Particle Network Animation Script ---
+      const particleCanvas = document.getElementById("particle-background");
+      const ctx = particleCanvas.getContext("2d");
+      let particlesArray;
+
+      // Set canvas size
+      particleCanvas.width = window.innerWidth;
+      particleCanvas.height = window.innerHeight;
+
+      // Mouse position
+      let mouse = {
+        x: null,
+        y: null,
+        radius: (particleCanvas.height / 110) * (particleCanvas.width / 110),
+      };
+
+      window.addEventListener("mousemove", function (event) {
+        mouse.x = event.x;
+        mouse.y = event.y;
+      });
+      window.addEventListener("mouseout", function () {
+        mouse.x = undefined;
+        mouse.y = undefined;
+      });
+
+      // Particle class
+      class Particle {
+        constructor(x, y, directionX, directionY, size, color) {
+          this.x = x;
+          this.y = y;
+          this.directionX = directionX;
+          this.directionY = directionY;
+          this.size = size;
+          this.color = color;
+        }
+
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+          ctx.fillStyle = "rgba(0, 191, 255, 0.5)";
+          ctx.fill();
+        }
+
+        update() {
+          if (this.x > particleCanvas.width || this.x < 0) {
+            this.directionX = -this.directionX;
+          }
+          if (this.y > particleCanvas.height || this.y < 0) {
+            this.directionY = -this.directionY;
+          }
+
+          // check collision detection - mouse position
+          let dx = mouse.x - this.x;
+          let dy = mouse.y - this.y;
+          let distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance < mouse.radius + this.size) {
+            if (
+              mouse.x < this.x &&
+              this.x < particleCanvas.width - this.size * 10
+            ) {
+              this.x += 5;
+            }
+            if (mouse.x > this.x && this.x > this.size * 10) {
+              this.x -= 5;
+            }
+            if (
+              mouse.y < this.y &&
+              this.y < particleCanvas.height - this.size * 10
+            ) {
+              this.y += 5;
+            }
+            if (mouse.y > this.y && this.y > this.size * 10) {
+              this.y -= 5;
+            }
+          }
+
+          this.x += this.directionX;
+          this.y += this.directionY;
+          this.draw();
+        }
+      }
+
+      // Create particle array
+      function initParticles() {
+        particlesArray = [];
+        let numberOfParticles =
+          (particleCanvas.height * particleCanvas.width) / 9000;
+        for (let i = 0; i < numberOfParticles; i++) {
+          let size = Math.random() * 2 + 1;
+          let x = Math.random() * (innerWidth - size * 2 - size * 2) + size * 2;
+          let y =
+            Math.random() * (innerHeight - size * 2 - size * 2) + size * 2;
+          let directionX = Math.random() * 0.4 - 0.2;
+          let directionY = Math.random() * 0.4 - 0.2;
+          let color = "rgba(0, 191, 255, 0.5)";
+          particlesArray.push(
+            new Particle(x, y, directionX, directionY, size, color)
+          );
+        }
+      }
+
+      // Animation loop
+      function animateParticles() {
+        requestAnimationFrame(animateParticles);
+        ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+        for (let i = 0; i < particlesArray.length; i++) {
+          particlesArray[i].update();
+        }
+        connectParticles();
+      }
+
+      // Connect particles
+      function connectParticles() {
+        let opacityValue = 1;
+        for (let a = 0; a < particlesArray.length; a++) {
+          for (let b = a; b < particlesArray.length; b++) {
+            let distance =
+              (particlesArray[a].x - particlesArray[b].x) *
+                (particlesArray[a].x - particlesArray[b].x) +
+              (particlesArray[a].y - particlesArray[b].y) *
+                (particlesArray[a].y - particlesArray[b].y);
+            if (
+              distance <
+              (particleCanvas.width / 7) * (particleCanvas.height / 7)
+            ) {
+              opacityValue = 1 - distance / 20000;
+              ctx.strokeStyle = "rgba(0, 191, 255," + opacityValue + ")";
+              ctx.lineWidth = 1;
+              ctx.beginPath();
+              ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+              ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+              ctx.stroke();
+            }
+          }
+        }
+      }
+
+      // Resize event
+      window.addEventListener("resize", function () {
+        particleCanvas.width = innerWidth;
+        particleCanvas.height = innerHeight;
+        mouse.radius =
+          (particleCanvas.height / 110) * (particleCanvas.width / 110);
+        initParticles();
+      });
+
+      // --- End of Particle Script ---
+
+      const slideData = [
+        // Slide 1: Title
+        {
+          type: "title",
+          title: "Use of Digital Media Platforms in Education",
+          subtitle: "A Study of Secondary Schools in the Noida Region",
+          author: "Apoorva Agnihotri",
+          institution: "Noida International University",
+        },
+        // Slide 2: Introduction
+        {
+          header: "Introduction: The Catalyst for Change",
+          layout: "2-col",
+          content: [
+            {
+              type: "bullets",
+              items: [
+                "The COVID-19 pandemic acted as an unprecedented catalyst, compelling a near-instantaneous migration to digital education frameworks.",
+                "This study moves beyond a surface-level review, offering a granular analysis of this digital shift within Noida, a key educational hub in North India.",
+                "It examines the transition from nascent 'Emergency Remote Learning' to structured, sustainable Online Education models, integrating tools like LMS and video conferencing.",
+              ],
+            },
+            {
+              type: "key-terms",
+              title: "Core Concepts",
+              terms: {
+                LMS: "Learning Management System",
+                OEP: "Online Education Platform",
+                Synchronous: "Real-time, interactive learning",
+                Asynchronous: "Self-paced, flexible learning",
+                "Digital Competence":
+                  "Beyond tech skills, includes literacy, communication, and safety.",
+              },
+            },
+          ],
+        },
+        // Slide 3: Statement of the Problem
+        {
+          header: "Statement of the Problem",
+          layout: "focus",
+          content: [
+            {
+              type: "icon",
+              src: "https://img.icons8.com/fluency/96/search-in-cloud.png",
+            },
+            {
+              type: "paragraph",
+              text: `
+             COVID-19 forced secondary schools in Noida to shift rapidly from classrooms to digital platforms for teaching and learning.
+Tools like Zoom, MS Teams, Google Classroom, LMS, and ERP systems became essential for academic continuity.<br><br>
+The sudden move created major challenges (limited devices, poor internet, lack of training) but also opened new opportunities for flexible, tech-driven education.
+This study examines the effectiveness, barriers, and future impact of these platforms in Noida’s secondary schools.
+
+              `,
+            },
+          ],
+        },
+        // Slide 4: Research Objectives
+        {
+          header: "Research Objectives",
+          layout: "5-cards-expanded",
+          content: [
+            {
+              icon: "https://img.icons8.com/fluency/96/categorize.png",
+              title: "Identify & Categorize",
+              text: "To systematically identify and categorize the full spectrum of digital platforms (LMS, OEPs, collaborative tools) adopted by secondary schools in the Noida region during the study period.",
+            },
+            {
+              icon: "https://img.icons8.com/fluency/96/mind-map.png",
+              title: "Assess Impact",
+              text: "To assess the tangible impact of technical proficiency and pre-existing digital literacy on the effective and confident use of these platforms by both student and teacher cohorts.",
+            },
+            {
+              icon: "https://img.icons8.com/fluency/96/positive-dynamic.png",
+              title: "Evaluate Perceptions",
+              text: "To evaluate the attitudes, satisfaction levels, and critically perceived effectiveness of the chosen platforms from the distinct perspectives of students and educators.",
+            },
+            {
+              icon: "https://img.icons8.com/fluency/96/data-migration.png",
+              title: "Examine Transition",
+              text: "To examine the intricacies of the institutional migration process, identifying key facilitators (e.g., training) and barriers (e.g., technical glitches) to a smooth and successful transition.",
+            },
+            {
+              icon: "https://img.icons8.com/fluency/96/business-report.png",
+              title: "Determine Efficacy",
+              text: "To determine the overall efficacy of these digital tools in maintaining educational continuity, quality of instruction, and student engagement in a remote context.",
+            },
+          ],
+        },
+        // Slide 5: Research Hypotheses
+        {
+          header: "Research Hypotheses",
+          layout: "full-width-list-no-scroll",
+          content: [
+            {
+              type: "hypothesis",
+              number: "H1",
+              text: "Secondary schools in NOIDA have adopted a diverse range of digital media platforms for educational delivery.",
+            },
+            {
+              type: "hypothesis",
+              number: "H2",
+              text: "Both students and teachers in NOIDA secondary schools are well-versed and proficient in using these digital platforms.",
+            },
+            {
+              type: "hypothesis",
+              number: "H3",
+              text: "The implemented digital media platforms have achieved wide acceptance and positive reception among students and teachers.",
+            },
+            {
+              type: "hypothesis",
+              number: "H4",
+              text: "The institutional migration to digital platforms was a largely seamless and hassle-free process for stakeholders.",
+            },
+            {
+              type: "hypothesis",
+              number: "H5",
+              text: "The adopted digital platforms have proven to be effective pedagogical tools for teaching and learning at the secondary level.",
+            },
+          ],
+        },
+        // Slide 6: Literature Review & Theoretical Framework
+        {
+          header: "Literature Review & Theoretical Framework",
+          layout: "2-col-split",
+          content: [
+            {
+              type: "bullets",
+              title: "Key Insights from Literature",
+              items: [
+                "A comprehensive review of 74 sources (1967-2022) revealed a significant gap in India-centric research on secondary school digital adoption.",
+                "Literature confirms the shift from teacher-centric to student-centric models in online education, changing the educator's role to a 'guide on the side'.",
+                "Digital Competence (DigComp Framework) is identified as a critical factor, encompassing not just technical skills but also information literacy, communication, and safety.",
+              ],
+            },
+            {
+              type: "framework",
+              title: "Moore's Transactional Distance Theory",
+              text: "This study is framed by Moore's theory, which analyzes the psychological and communication gap between learners and instructors in remote settings. It helps in understanding how platform design and interaction can reduce this 'distance' and enhance learning.",
+              icon: "https://img.icons8.com/fluency/96/network.png",
+            },
+          ],
+        },
+        // Slide 7: Methodology - Research Design
+        {
+          header: "Methodology: Research Design",
+          layout: "3-cards-expanded",
+          content: [
+            {
+              icon: "https://img.icons8.com/fluency/96/design.png",
+              title: "Qualitative & Exploratory",
+              text: 'This design was chosen to delve into the complex, nuanced experiences of the digital transition. It prioritizes understanding the "why" and "how" behind the data, capturing rich, descriptive insights rather than just quantitative metrics.',
+            },
+            {
+              icon: "https://img.icons8.com/fluency/96/questions.png",
+              title: "Survey Questionnaires",
+              text: "Two distinct, comprehensive surveys were meticulously developed for students (20 questions) and teachers (30 questions) to capture their unique perspectives on usability, effectiveness, and satisfaction.",
+            },
+            {
+              icon: "https://img.icons8.com/fluency/96/test-account.png",
+              title: "Statistical Analysis",
+              text: "A dual-tool approach was used for rigor: MS Excel for initial data organization and IBM SPSS (v.20) for advanced inferential analysis, including ANOVA, to establish statistical significance.",
+            },
+          ],
+        },
+        // Slide 8: Methodology - Population & Sampling
+        {
+          header: "Methodology: Population & Sampling",
+          layout: "3-cards-expanded",
+          content: [
+            {
+              icon: "https://img.icons8.com/fluency/96/worldwide-location.png",
+              title: "Population",
+              text: "All secondary schools in Noida region, including CBSE, IB, and ISCE boards, covering students (grades 6–10) and their teachers.",
+            },
+            {
+              icon: "https://img.icons8.com/fluency/96/elections.png",
+              title: "Sampling Technique",
+              text: "Random Sampling was used to select schools and respondents, ensuring equal representation and unbiased data collection.",
+            },
+            {
+              icon: "https://img.icons8.com/fluency/96/conference-call.png",
+              title: "Sample Size",
+              text: "Data collected from 751 students (8 schools) and 107 teachers (11 schools), ensuring diverse and reliable results.",
+            },
+          ],
+        },
+        // Slide 9: Findings - The Digital Infrastructure
+        {
+          header: "Findings: Digital Infrastructure",
+          layout: "3-stats",
+          content: [
+            {
+              title: "Internet Access (Students)",
+              value: 99.3,
+              unit: "%",
+              text: "Students reported steady high-speed internet at home.",
+            },
+            {
+              title: "Connectivity Issues",
+              value: 28.5,
+              unit: "%",
+              text: "Students faced frequent disruptions during online classes.",
+            },
+            {
+              title: "Teacher Training",
+              value: 97.2,
+              unit: "%",
+              text: "Teachers received formal training on digital platforms.",
+            },
+          ],
+        },
+        // Slide 10: Findings - Platform Adoption Landscape
+        {
+          header: "Findings: Platform Adoption Landscape",
+          layout: "grouped-bar-chart",
+          content: {
+            title: "Comparative Platform Preferences: Students vs. Teachers",
+            categories: [
+              "MS Teams",
+              "Zoom",
+              "Google Classroom",
+              "Moodle",
+              "Skooler",
+            ],
+            studentData: [32.2, 33.2, 19.7, 14.8, 0.1],
+            teacherData: [51.4, 5.6, 13.0, 12.1, 16.8],
+          },
+        },
+        // Slide 11: Findings - The Transition Experience
+        {
+          header: "Findings: The Transition Experience",
+          layout: "2-donuts-1-stat",
+          content: [
+            {
+              type: "donut-chart",
+              title: "Student Migration Experience",
+              value: 81.2,
+              label: "Positive Experience",
+            },
+            {
+              type: "donut-chart",
+              title: "Teacher Migration Experience",
+              value: 71.0,
+              label: "Smooth Transition",
+            },
+            {
+              type: "stat",
+              title: "Key Insight",
+              text: "The sudden move to digital platforms was challenging at first, with issues like unstable internet and lack of training. However, school interventions—such as hands-on sessions and platform tutorials—helped most students (81.2%) and teachers (71%) adapt quickly, ensuring academic continuity despite the pandemic.",
+            },
+          ],
+        },
+        //Slide 12
+        {
+          header: "Findings: User Comfort & Proficiency",
+          layout: "3-stats",
+          content: [
+            {
+              title: "Student Comfort Level",
+              value: 99.1,
+              unit: "%",
+              text: "Students reported feeling comfortable or highly comfortable using digital platforms.",
+            },
+            {
+              title: "Teacher Comfort Level",
+              value: 93.5,
+              unit: "%",
+              text: "Teachers adapted quickly with proper training and support.",
+            },
+            {
+              title: "Digital Readiness",
+              value: 54.2,
+              unit: "%",
+              text: "Teachers had prior experience using digital tools before the pandemic.",
+            },
+          ],
+        },
+        // Slide 13: Findings - Perceived Effectiveness
+        {
+          header: "Findings: Perceived Effectiveness",
+          layout: "3-stats",
+          content: [
+            {
+              title: "Student Effectiveness Rating",
+              value: 91.2,
+              unit: "%",
+              text: "of students rated platforms as 'Effective' or 'Very Effective' for their learning.",
+            },
+            {
+              title: "Teacher Effectiveness Rating",
+              value: 83.2,
+              unit: "%",
+              text: "of teachers rated platforms as 'Effective' or 'Very Effective' for teaching.",
+            },
+            {
+              title: "Overall Approval",
+              value: 91.6,
+              unit: "%",
+              text: "Combined approval rating from both groups, indicating strong validation of the platforms' utility.",
+            },
+          ],
+        },
+        // --- MODIFICATION: Redesigned Slide 14 for better visual impact ---
+        {
+          header: "Findings: Overall Satisfaction Levels",
+          layout: "dual-stat-focus", // New layout type
+          content: {
+            title: "User satisfaction reached near-universal approval.",
+            stats: [
+              {
+                value: 98.4,
+                unit: "%",
+                label: "of Students",
+                description:
+                  "Reported being 'Satisfied' or 'Very Satisfied' with the digital platforms.",
+              },
+              {
+                value: 97.2,
+                unit: "%",
+                label: "of Teachers",
+                description:
+                  "Expressed high satisfaction, indicating successful alignment of tech with user needs.",
+              },
+            ],
+            conclusion:
+              "This overwhelming positive response underscores the successful adoption and effectiveness of the chosen educational technologies.",
+          },
+        },
+        // Slide 15: Hypothesis Verdict
+        {
+          header: "Hypothesis Verdict: All Supported",
+          layout: "full-width-table",
+          content: [
+            {
+              type: "table",
+              headers: ["Hypothesis Statement", "Result"],
+              rows: [
+                ["A wide variety of platforms are in use.", "SUPPORTED"],
+                ["Users are well-versed and proficient.", "SUPPORTED"],
+                ["Platforms have received wide acceptance.", "SUPPORTED"],
+                ["The migration process was hassle-free.", "SUPPORTED"],
+                ["Platforms are effective learning tools.", "SUPPORTED"],
+              ],
+            },
+          ],
+        },
+        // Slide 16: Major Findings Synthesized
+        {
+          header: "Major Findings Synthesized",
+          layout: "full-width-list",
+          content: [
+            {
+              type: "finding",
+              icon: "https://img.icons8.com/fluency/96/checked-2.png",
+              text: "The transition to digital platforms was overwhelmingly smooth and effective, validating the resilience of the Noida educational ecosystem.",
+            },
+            {
+              type: "finding",
+              icon: "https://img.icons8.com/fluency/96/conference-call.png",
+              text: "Both students and teachers reported exceptionally high levels of comfort, satisfaction, and approval, with satisfaction rates exceeding 97%.",
+            },
+            {
+              type: "finding",
+              icon: "https://img.icons8.com/fluency/96/microsoft-teams-2019.png",
+              text: "Microsoft Teams emerged as the institutional favorite, especially among teachers (51.4%), though students showed a balanced preference between Teams and Zoom.",
+            },
+            {
+              type: "finding",
+              icon: "https://img.icons8.com/fluency/96/wifi.png",
+              text: "Critical success factors were near-universal student internet access (99.3%) and comprehensive teacher training (97.2%).",
+            },
+          ],
+        },
+        // Slide 17: Conclusion
+        {
+          header: "Conclusion: A Paradigm Shift",
+          layout: "2-col",
+          content: [
+            {
+              type: "bullets",
+              items: [
+                "Digital Media Platforms are now irrevocably integrated into the educational framework of Noida's secondary schools.",
+                "The pandemic-driven adoption was not a temporary fix but a successful paradigm shift, creating a robust and well-accepted virtual learning model.",
+                "The study confirms that with the right infrastructure, training, and platform choice, online education is a highly effective model for secondary-level learning.",
+                "The future is definitively blended, combining the strengths of online and in-person modalities for a more resilient, personalized educational future.",
+              ],
+            },
+            {
+              type: "image",
+              src: "https://images.pexels.com/photos/7972506/pexels-photo-7972506.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            },
+          ],
+        },
+        // MODIFICATION: Shortened Text for Slide 18
+        {
+          header: "Limitations of the Study",
+          layout: "2-col-split-no-scroll",
+          content: [
+            {
+              type: "bullets",
+              title: "Methodological Constraints",
+              items: [
+                "Relies on self-reported survey data, which may have personal bias.",
+                "Closed-ended questions limited the depth of qualitative insights.",
+                "Data reflects a specific, high-pressure moment in time.",
+                "Lacks direct observation of online classes for another data layer.",
+                "Effectiveness is subjective, not tied to academic performance metrics.",
+              ],
+            },
+            {
+              type: "bullets",
+              title: "Scope & Generalizability",
+              items: [
+                "Findings are specific to urban NOIDA; not generalizable to rural areas.",
+                "The sample had a slight gender imbalance, which could influence results.",
+                "Focuses on secondary schools; may not apply to other education levels.",
+                "Doesn't differentiate between private and public school resources.",
+                "Cross-sectional design doesn't track skill/attitude evolution over time.",
+              ],
+            },
+          ],
+        },
+        // MODIFICATION: Shortened Text for Slide 19
+        {
+          header: "Suggestions & Future Directions",
+          layout: "2-col-split-no-scroll",
+          content: [
+            {
+              type: "bullets",
+              title: "For Institutions & Policymakers",
+              items: [
+                "Invest in continuous professional development for advanced online pedagogy.",
+                "Develop policies to ensure digital equity and address remaining access gaps.",
+                "Standardize on feature-rich platforms for a seamless, integrated ecosystem.",
+                "Create centralized digital resource libraries to support teachers.",
+                "Establish clear communication protocols and mental health support systems.",
+              ],
+            },
+            {
+              type: "bullets",
+              title: "For Future Research",
+              items: [
+                "Conduct longitudinal studies on the long-term impacts of blended learning.",
+                "Expand research nationally for a comparative picture across regions.",
+                "Use qualitative methods (focus groups, observations) for deeper insights.",
+                "Investigate links between platform features and student engagement.",
+                "Analyze the socio-emotional impact of prolonged screen time.",
+              ],
+            },
+          ],
+        },
+        // Slide 20: Thank You
+        {
+          type: "final",
+          title: "Thank You",
+          subtitle: "Questions & Discussion",
+          author: "Apoorva Agnihotri",
+        },
+      ];
+
+      const presentationContainer = document.getElementById(
+        "presentation-container"
+      );
+      let currentSlide = 0;
+      let slides = [];
+
+      function createSlideContent(slide, index) {
+        let bodyContent = "";
+
+        if (slide.layout === "2-col") {
+          bodyContent = `<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full">`;
+          slide.content.forEach((item) => {
+            if (item.type === "bullets") {
+              bodyContent += `<div><ul class="bullet-list">${item.items
+                .map((i) => `<li class="reveal-text">${i}</li>`)
+                .join("")}</ul></div>`;
+            } else if (item.type === "key-terms") {
+              bodyContent += `<div class="data-card reveal-element"><h3 class="mb-4" style="font-family: 'Playfair Display', serif; color: var(--accent-gold); font-size: clamp(1.2rem, 2vw, 1.8rem);">${
+                item.title
+              }</h3>${Object.entries(item.terms)
+                .map(
+                  ([k, v]) =>
+                    `<div class="core-term-row">
+        <span class="core-term-key">${k}</span>
+        <span class="core-term-value">${v}</span>
+     </div>`
+                )
+                .join("")}</div>`;
+            } else if (item.type === "image") {
+              bodyContent += `<div class="flex items-center justify-center reveal-element"><img src="${item.src}" alt="Presentation Image" class="max-h-[50vh] w-full object-cover rounded-lg shadow-lg" onerror="this.src='https://placehold.co/600x400/0a0f1e/d1d5db?text=Image'; this.onerror=null;"></div>`;
+            }
+          });
+          bodyContent += `</div>`;
+        } else if (slide.layout === "focus") {
+          bodyContent = `<div class="flex flex-col items-center justify-center text-center h-full gap-6">
+                    ${slide.content
+                      .map((item) => {
+                        if (item.type === "icon")
+                          return `<img src="${item.src}" alt="Icon" class="w-16 h-16 md:w-20 md:h-20 reveal-element">`;
+                        if (item.type === "paragraph")
+                          return `<p class="max-w-5xl leading-relaxed reveal-text"  font-size: clamp(20px, 2vw, 20px);">${item.text}</p>`;
+                        return "";
+                      })
+                      .join("")}
+                </div>`;
+        } else if (slide.layout === "dual-stat-focus") {
+          const { title, stats, conclusion } = slide.content;
+          bodyContent = `
+                <div class="flex flex-col items-center justify-center text-center h-full gap-4 md:gap-6">
+                    <h3 class="font-bold text-white reveal-text" style="font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 2.5vw, 2.5rem);">${title}</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl my-4">
+                        ${stats
+                          .map(
+                            (stat) => `
+                            <div class="data-card p-6 reveal-element">
+                                <p class="counter-value" style="font-size: clamp(3rem, 7vw, 6rem);" data-value="${
+                                  stat.value
+                                }" data-unit="${stat.unit || "%"}">0.0%</p>
+                                <p class="font-semibold text-white mt-2" style="font-size: clamp(1.1rem, 2vw, 1.6rem);">${
+                                  stat.label
+                                }</p>
+                                <p class="text-secondary mt-2" style="font-size: clamp(0.9rem, 1.5vw, 1.1rem);">${
+                                  stat.description
+                                }</p>
+                            </div>
+                        `
+                          )
+                          .join("")}
+                    </div>
+                    <p class="max-w-4xl text-secondary reveal-text" style="font-size: clamp(0.9rem, 1.5vw, 1.1rem);">${conclusion}</p>
+                </div>
+            `;
+        } else if (
+          slide.layout === "5-cards" ||
+          slide.layout === "5-cards-expanded"
+        ) {
+          bodyContent = `<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 items-stretch h-full">
+                    ${slide.content
+                      .map(
+                        (card) => `
+                        <div class="data-card text-center items-center justify-center reveal-element">
+                            <img src="${card.icon}" alt="${card.title}" class="w-12 h-12 md:w-14 md:h-14 mb-3 mx-auto">
+                            <h3 class="font-bold text-white mb-2" style="font-size: clamp(0.9rem, 1.5vw, 1.2rem);">${card.title}</h3>
+                            <p class="text-secondary flex-grow" style="font-size: clamp(0.8rem, 1.2vw, 1rem);">${card.text}</p>
+                        </div>
+                    `
+                      )
+                      .join("")}
+                </div>`;
+        } else if (
+          slide.layout === "3-cards" ||
+          slide.layout === "3-cards-expanded"
+        ) {
+          bodyContent = `<div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch h-full">
+                    ${slide.content
+                      .map(
+                        (card) => `
+                        <div class="data-card text-center items-center justify-center reveal-element">
+                            <img src="${card.icon}" alt="${card.title}" class="w-14 h-14 md:w-16 md:h-16 mb-4 mx-auto">
+                            <h3 class="font-bold text-white mb-2" style="font-size: clamp(1rem, 2vw, 1.4rem);">${card.title}</h3>
+                            <p class="text-secondary flex-grow" style="font-size: clamp(0.9rem, 1.5vw, 1.1rem);">${card.text}</p>
+                        </div>
+                    `
+                      )
+                      .join("")}
+                </div>`;
+        } else if (
+          slide.layout === "full-width-list" ||
+          slide.layout === "full-width-list-no-scroll"
+        ) {
+          bodyContent = `<div class="flex flex-col justify-start"><ul class="w-full space-y-3">
+        ${slide.content
+          .map((item) => {
+            if (item.type === "hypothesis") {
+              return `<li class="data-card reveal-element p-3 flex flex-row items-center text-left">
+                        <h1 class="text-lg md:text-xl font-bold mr-3 text-accent-cyan" style="font-size: 18px; min-width: 50px;">
+                          ${item.number}
+                        </h1>
+                        <p class="text-base leading-snug" style="font-size: 16px; line-height: 1.4; margin:0;">
+                          ${item.text}
+                        </p>
+                      </li>`;
+            }
+            if (item.type === "finding") {
+              return `<li class="data-card reveal-element p-4 flex flex-col items-start text-left">
+                        <div class="flex items-center mb-1">
+                          <img src="${item.icon}" alt="Finding" class="w-8 h-6 mr-3 flex-shrink-0">
+                         
+                        </div>
+                        <p class="text-base md:text-lg leading-snug" style="font-size: 17px">${item.text}</p>
+                      </li>`;
+            }
+            return "";
+          })
+          .join("")}
+      </ul></div>`;
+        } else if (
+          slide.layout === "2-col-split" ||
+          slide.layout === "2-col-split-no-scroll"
+        ) {
+          bodyContent = `<div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start h-full">
+                    ${slide.content
+                      .map((col) => {
+                        let colContent = `<h3 class="mb-6 font-bold text-white reveal-text" style="font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 2.5vw, 2.2rem);">${col.title}</h3>`;
+                        if (col.type === "bullets") {
+                          colContent += `<ul class="bullet-list ${
+                            slide.layout === "2-col-split-no-scroll"
+                              ? "compact"
+                              : ""
+                          }">${col.items
+                            .map((i) => `<li class="reveal-text">${i}</li>`)
+                            .join("")}</ul>`;
+                        } else if (col.type === "framework") {
+                          colContent += `<div class="reveal-element"><img src="${col.icon}" alt="Framework" class="w-16 h-16 md:w-20 md:h-20 mb-4"><p style="font-size: clamp(0.9rem, 1.5vw, 1.1rem);">${col.text}</p></div>`;
+                        }
+                        return `<div>${colContent}</div>`;
+                      })
+                      .join("")}
+                </div>`;
+        } else if (slide.layout === "3-stats") {
+          bodyContent = `<div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center h-full text-center">
+                    ${slide.content
+                      .map(
+                        (stat) => `
+                        <div class="reveal-element">
+                            <p class="counter-value" style="font-size: clamp(2.5rem, 9vw, 5rem);" data-value="${
+                              stat.value
+                            }" data-unit="${stat.unit || "%"}">0.0%</p>
+                            <h3 class="font-semibold mt-4 mb-2 text-white" style="font-size: clamp(1.1rem, 2vw, 1.6rem);">${
+                              stat.title
+                            }</h3>
+                            <p class="text-secondary max-w-xs mx-auto" style="font-size: clamp(0.9rem, 1.5vw, 1.1rem);">${
+                              stat.text
+                            }</p>
+                        </div>
+                    `
+                      )
+                      .join("")}
+                </div>`;
+        } else if (slide.layout === "grouped-bar-chart") {
+          bodyContent = `<div class="h-full flex flex-col">
+                    <h3 class="text-center font-bold text-white mb-4" style="font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 2vw, 2rem);">${slide.content.title}</h3>
+                    <div class="flex-grow chart-container" id="chart-${index}-0"></div>
+                </div>`;
+        } else if (slide.layout === "2-donuts-1-stat") {
+          bodyContent = `<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center h-full">
+                    ${slide.content
+                      .map((item, itemIndex) => {
+                        if (item.type === "donut-chart") {
+                          return `<div class="flex flex-col items-center text-center reveal-element">
+                                <div class="chart-container relative w-48 h-48 sm:w-56 sm:h-56 lg:w-60 lg:h-60 mx-auto" id="donut-${index}-${itemIndex}"></div>
+                                <h3 class="font-bold text-white mt-4" style="font-size: clamp(1rem, 2vw, 1.4rem);">${item.title}</h3>
+                            </div>`;
+                        }
+                        if (item.type === "stat") {
+                          return `<div class="data-card text-center reveal-element">
+                                <h3 class="font-bold text-accent-gold mb-4" style="font-size: clamp(1.1rem, 2vw, 1.5rem);">${item.title}</h3>
+                                <p style="font-size: clamp(0.9rem, 1.5vw, 1.1rem);">${item.text}</p>
+                            </div>`;
+                        }
+                        return "";
+                      })
+                      .join("")}
+                </div>`;
+        } else if (slide.layout === "full-width-table") {
+          const table = slide.content[0];
+          bodyContent = `<div class="h-full flex items-center reveal-element">
+                    <table class="w-full border-collapse">
+                        <thead><tr>${table.headers
+                          .map(
+                            (h) =>
+                              `<th class="p-4 border border-[var(--border-glow)] text-left font-semibold" style="font-family: 'Playfair Display', serif; font-size: clamp(1rem, 1.8vw, 1.5rem);">${h}</th>`
+                          )
+                          .join("")}</tr></thead>
+                        <tbody>${table.rows
+                          .map(
+                            (row) =>
+                              `<tr>${row
+                                .map(
+                                  (cell) =>
+                                    `<td class="p-4 border border-[var(--border-glow)] ${
+                                      cell === "SUPPORTED"
+                                        ? "text-accent-cyan font-bold"
+                                        : ""
+                                    }" style="font-size: clamp(0.9rem, 1.5vw, 1.2rem);">${cell}</td>`
+                                )
+                                .join("")}</tr>`
+                          )
+                          .join("")}</tbody>
+                    </table>
+                </div>`;
+        }
+
+        return `<div class="slide-body ${
+          slide.layout.includes("no-scroll") ? "no-scroll" : ""
+        }">${bodyContent}</div>`;
+      }
+
+      function buildPresentation() {
+        slideData.forEach((data, index) => {
+          const slideEl = document.createElement("section");
+          slideEl.className = "slide";
+          slideEl.id = `slide-${index + 1}`;
+
+          if (data.type === "title") {
+            slideEl.innerHTML = `
+                        <div class="absolute inset-0 bg-black/75 z-10"></div>
+                        <div class="text-center relative z-20 p-4">
+                           <div class="logo-wrapper reveal-element">
+                           <!-- LOGO IS NOW EMBEDDED SVG TO PREVENT 404 ERRORS ON DEPLOYMENT -->
+                            
+  <img src="https://niu.edu.in/wp-content/uploads/2024/06/Asset-1-2.svg" 
+       alt="Noida International University Logo" 
+       class="logo-img"
+       onerror="this.style.display='none'"/>
+
+</div>
+                            <h1 class="font-bold mb-4 tracking-tight reveal-text" style="font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 4vw, 5.5rem);">${data.title}</h1>
+                            <p class="text-secondary mb-10 reveal-text" style="font-size: clamp(1.2rem, 2vw, 2.2rem);">${data.subtitle}</p>
+                            <div class="text-secondary reveal-element" style="font-size: clamp(1rem, 1.8vw, 1.6rem);">
+                                <p><span class="font-semibold text-primary">${data.author}</span></p>
+                                <p class="mt-2 font-semibold text-primary">${data.institution}</p>
+                            </div>
+                        </div>`;
+          } else if (data.type === "final") {
+            slideEl.innerHTML = `<div class="slide-content justify-center items-center text-center p-4">
+                        <h2 class="font-bold reveal-text mb-8" style="font-family: 'Playfair Display', serif; font-size: clamp(4rem, 12vw, 9rem);">${data.title}</h2>
+                        <p class="text-secondary reveal-text" style="font-size: clamp(1.5rem, 4vw, 4rem);">${data.subtitle}</p>
+                        <p class="text-primary mt-8 reveal-element" style="font-size: clamp(1.2rem, 2vw, 2.2rem);">${data.author}</p>
+                    </div>`;
+          } else {
+            slideEl.innerHTML = `
+                        <div class="slide-content">
+                            <div class="slide-header"><h2 class="reveal-text">${
+                              data.header
+                            }</h2></div>
+                            ${createSlideContent(data, index)}
+                            <div class="slide-footer">
+                                <span>Apoorva Agnihotri | Thesis Presentation</span>
+                                <span class="font-bold">Slide ${index + 1} / ${
+              slideData.length
+            }</span>
+                            </div>
+                        </div>`;
+          }
+          presentationContainer.appendChild(slideEl);
+        });
+        slides = document.querySelectorAll(".slide");
+      }
+
+      function triggerAnimations(targetSlide) {
+        if (!targetSlide || targetSlide.dataset.animated === "true") return;
+
+        const timeline = anime.timeline({
+          easing: "easeOutExpo",
+          duration: 800,
+        });
+
+        timeline.add({
+          targets: targetSlide.querySelectorAll(
+            ".reveal-text, .reveal-element"
+          ),
+          translateY: [20, 0],
+          opacity: [0, 1],
+          scale: [0.98, 1],
+          delay: anime.stagger(100),
+        });
+
+        targetSlide.querySelectorAll(".counter-value").forEach((counter) => {
+          const animatedProps = { value: 0 };
+          timeline.add(
+            {
+              targets: animatedProps,
+              value: parseFloat(counter.dataset.value),
+              round: 10,
+              easing: "easeOutQuint",
+              duration: 1500,
+              update: function () {
+                counter.innerHTML =
+                  animatedProps.value.toFixed(1) +
+                  (counter.dataset.unit || "%");
+              },
+            },
+            "-=600"
+          );
+        });
+
+        if (
+          targetSlide.querySelector('[id^="chart-"]') &&
+          slideData[currentSlide].layout === "grouped-bar-chart"
+        ) {
+          const chartEl = targetSlide.querySelector('[id^="chart-"]');
+          chartEl.innerHTML = "";
+          const chartData = slideData[currentSlide].content;
+
+          const svg = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "svg"
+          );
+          const width = chartEl.clientWidth;
+          const height = chartEl.clientHeight;
+          svg.setAttribute("width", "100%");
+          svg.setAttribute("height", "100%");
+          svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+          chartEl.appendChild(svg);
+
+          const defs = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "defs"
+          );
+          defs.innerHTML = `
+                    <linearGradient id="studentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="${getComputedStyle(
+                          document.documentElement
+                        ).getPropertyValue("--accent-magenta")}" />
+                        <stop offset="100%" stop-color="${getComputedStyle(
+                          document.documentElement
+                        ).getPropertyValue("--accent-cyan")}" />
+                    </linearGradient>
+                    <linearGradient id="teacherGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="${getComputedStyle(
+                          document.documentElement
+                        ).getPropertyValue("--accent-gold")}" />
+                        <stop offset="100%" stop-color="${getComputedStyle(
+                          document.documentElement
+                        ).getPropertyValue("--accent-cyan")}" />
+                    </linearGradient>`;
+          svg.appendChild(defs);
+
+          const maxVal = 60;
+          const chartAreaHeight = height - 80;
+          const barGroupWidth = width / chartData.categories.length;
+          const barWidth = barGroupWidth * 0.3;
+
+          for (let i = 0; i <= 4; i++) {
+            const y = 40 + chartAreaHeight * (i / 4);
+            const line = document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "line"
+            );
+            line.setAttribute("x1", 50);
+            line.setAttribute("y1", y);
+            line.setAttribute("x2", width - 20);
+            line.setAttribute("y2", y);
+            line.setAttribute("stroke", "var(--border-glow)");
+            line.setAttribute("stroke-dasharray", "2 2");
+            svg.appendChild(line);
+
+            const text = document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "text"
+            );
+            text.textContent = `${maxVal * (1 - i / 4)}%`;
+            text.setAttribute("x", 40);
+            text.setAttribute("y", y + 4);
+            text.setAttribute("fill", "var(--text-secondary)");
+            text.setAttribute("font-size", "clamp(10px, 0.8vw, 14px)");
+            text.setAttribute("text-anchor", "end");
+            svg.appendChild(text);
+          }
+
+          chartData.categories.forEach((cat, i) => {
+            const groupX = i * barGroupWidth + barGroupWidth / 2;
+            const studentHeight =
+              (chartData.studentData[i] / maxVal) * chartAreaHeight;
+            const studentRect = document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "rect"
+            );
+            studentRect.setAttribute("x", groupX - barWidth - 2);
+            studentRect.setAttribute("y", 40 + chartAreaHeight);
+            studentRect.setAttribute("width", barWidth);
+            studentRect.setAttribute("height", 0);
+            studentRect.setAttribute("fill", "url(#studentGradient)");
+            studentRect.setAttribute("rx", "2");
+            svg.appendChild(studentRect);
+
+            const studentVal = document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "text"
+            );
+            studentVal.textContent = chartData.studentData[i].toFixed(1) + "%";
+            studentVal.setAttribute("x", groupX - barWidth / 2 - 2);
+            studentVal.setAttribute("y", 40 + chartAreaHeight - 10);
+            studentVal.setAttribute("fill", "white");
+            studentVal.setAttribute("font-size", "clamp(10px, 0.9vw, 12px)");
+            studentVal.setAttribute("font-weight", "bold");
+            studentVal.setAttribute("text-anchor", "middle");
+            studentVal.style.opacity = 0;
+            svg.appendChild(studentVal);
+
+            const teacherHeight =
+              (chartData.teacherData[i] / maxVal) * chartAreaHeight;
+            const teacherRect = document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "rect"
+            );
+            teacherRect.setAttribute("x", groupX + 2);
+            teacherRect.setAttribute("y", 40 + chartAreaHeight);
+            teacherRect.setAttribute("width", barWidth);
+            teacherRect.setAttribute("height", 0);
+            teacherRect.setAttribute("fill", "url(#teacherGradient)");
+            teacherRect.setAttribute("rx", "2");
+            svg.appendChild(teacherRect);
+
+            const teacherVal = document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "text"
+            );
+            teacherVal.textContent = chartData.teacherData[i].toFixed(1) + "%";
+            teacherVal.setAttribute("x", groupX + barWidth / 2 + 2);
+            teacherVal.setAttribute("y", 40 + chartAreaHeight - 10);
+            teacherVal.setAttribute("fill", "white");
+            teacherVal.setAttribute("font-size", "clamp(10px, 0.9vw, 12px)");
+            teacherVal.setAttribute("font-weight", "bold");
+            teacherVal.setAttribute("text-anchor", "middle");
+            teacherVal.style.opacity = 0;
+            svg.appendChild(teacherVal);
+
+            const label = document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "text"
+            );
+            label.textContent = cat;
+            label.setAttribute("x", groupX);
+            label.setAttribute("y", height - 20);
+            label.setAttribute("fill", "var(--text-secondary)");
+            label.setAttribute("font-size", "clamp(11px, 1.1vw, 15px)");
+            label.setAttribute("text-anchor", "middle");
+            svg.appendChild(label);
+
+            timeline.add(
+              {
+                targets: studentRect,
+                height: studentHeight,
+                y: 40 + chartAreaHeight - studentHeight,
+                duration: 1000,
+              },
+              `-=800`
+            );
+            timeline.add(
+              {
+                targets: teacherRect,
+                height: teacherHeight,
+                y: 40 + chartAreaHeight - teacherHeight,
+                duration: 1000,
+              },
+              `-=900`
+            );
+            timeline.add(
+              {
+                targets: [studentVal, teacherVal],
+                opacity: 1,
+                y: (el) =>
+                  parseFloat(el.getAttribute("y")) -
+                  (el === studentVal ? studentHeight : teacherHeight),
+                duration: 500,
+              },
+              "-=500"
+            );
+          });
+        }
+
+        targetSlide.querySelectorAll('[id^="donut-"]').forEach((chartEl) => {
+          chartEl.innerHTML = "";
+          const chartIndex = parseInt(chartEl.id.split("-")[2]);
+          const chartData = slideData[currentSlide].content[chartIndex];
+          if (!chartData || chartData.type !== "donut-chart") return;
+
+          const svg = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "svg"
+          );
+          svg.setAttribute("viewBox", "0 0 100 100");
+          chartEl.appendChild(svg);
+
+          const r = 40;
+          const circumference = 2 * Math.PI * r;
+          const offset =
+            circumference - (chartData.value / 100) * circumference;
+
+          svg.innerHTML = `
+            <circle cx="50" cy="50" r="${r}" stroke="rgba(0, 191, 255, 0.1)" stroke-width="10" fill="transparent"></circle>
+            <circle class="donut-fg" cx="50" cy="50" r="${r}" stroke="var(--accent-cyan)" stroke-width="10" fill="transparent" stroke-dasharray="${circumference}" stroke-dashoffset="${circumference}" transform="rotate(-90 50 50)" stroke-linecap="round"></circle>
+            <text class="donut-value" x="50" y="48" text-anchor="middle" dy="0.3em" font-size="18" font-weight="bold" fill="white">0.0%</text>
+            <text class="donut-label" x="50" y="65" text-anchor="middle" font-size="6" fill="var(--text-secondary)"></text>
+          `;
+
+          const textLabel = svg.querySelector(".donut-label");
+          const words = chartData.label.split(" ");
+          if (words.length > 2) {
+            textLabel.innerHTML = `<tspan x="50" dy="-0.2em">${words
+              .slice(0, 2)
+              .join(" ")}</tspan><tspan x="50" dy="1.2em">${words
+              .slice(2)
+              .join(" ")}</tspan>`;
+          } else {
+            textLabel.textContent = chartData.label;
+          }
+
+          timeline.add(
+            {
+              targets: svg.querySelector(".donut-fg"),
+              strokeDashoffset: [circumference, offset],
+              duration: 1500,
+            },
+            "-=800"
+          );
+
+          const animatedProps = { value: 0 };
+          timeline.add(
+            {
+              targets: animatedProps,
+              value: chartData.value,
+              round: 10,
+              duration: 1500,
+              easing: "easeOutQuint",
+              update: () => {
+                svg.querySelector(".donut-value").textContent =
+                  animatedProps.value.toFixed(1) + "%";
+              },
+            },
+            "-=1500"
+          );
+        });
+
+        targetSlide.dataset.animated = "true";
+      }
+
+      function goToSlide(slideIndex) {
+        if (slideIndex < 0 || slideIndex >= slideData.length) return;
+        currentSlide = slideIndex;
+        highlightSlide(slideIndex);
+        presentationContainer.style.transform = `translateX(-${
+          currentSlide * 100
+        }vw)`;
+
+        slides.forEach((s) => delete s.dataset.animated);
+
+        setTimeout(() => {
+          const targetSlide = slides[currentSlide];
+          if (!targetSlide) return;
+
+          const observer = new IntersectionObserver(
+            (entries) => {
+              if (entries[0].isIntersecting) {
+                triggerAnimations(targetSlide);
+                observer.disconnect();
+              }
+            },
+            { threshold: 0.8 }
+          );
+          observer.observe(targetSlide);
+        }, 800);
+
+        updateNavButtons();
+      }
+
+      function updateNavButtons() {
+        document.getElementById("prevBtn").disabled = currentSlide === 0;
+        document.getElementById("nextBtn").disabled =
+          currentSlide === slideData.length - 1;
+      }
+
+      function handleResize() {
+        if (slides.length > 0) {
+          const currentSlideEl = slides[currentSlide];
+          delete currentSlideEl.dataset.animated;
+          setTimeout(() => triggerAnimations(currentSlideEl), 100);
+        }
+      }
+
+      document
+        .getElementById("prevBtn")
+        .addEventListener("click", () => goToSlide(currentSlide - 1));
+      document
+        .getElementById("nextBtn")
+        .addEventListener("click", () => goToSlide(currentSlide + 1));
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowRight" || event.key === " ") {
+          event.preventDefault();
+          goToSlide(currentSlide + 1);
+        } else if (event.key === "ArrowLeft") {
+          goToSlide(currentSlide - 1);
+        }
+      });
+
+      // --- Initialize everything on load ---
+      document.addEventListener("DOMContentLoaded", (event) => {
+        buildPresentation();
+        goToSlide(0);
+
+        // Initialize and start the particle animation
+        initParticles();
+        animateParticles();
+      });
+
+      /* SIDEBAR  ─────────────────────────────────────────── */
+      document.addEventListener("DOMContentLoaded", () => {
+        const sidebar = document.getElementById("sidebar");
+        const sidebarList = document.getElementById("sidebar-list");
+        const sidebarTog = document.getElementById("sidebar-toggle");
+
+        const slides = [...document.querySelectorAll(".slide")]; // <- your slides
+        let current = 0; // default first
+
+        // 1. Build list entries
+        populateSidebar();
+        highlight(current);
+
+        // 2. Toggle button
+        sidebarTog.addEventListener("click", () =>
+          sidebar.classList.toggle("visible")
+        );
+
+        // 3. Click inside sidebar
+        sidebarList.addEventListener("click", (e) => {
+          const li = e.target.closest("li");
+          if (!li) return;
+          const idx = +li.dataset.slideIndex;
+          goToSlide(idx);
+          sidebar.classList.remove("visible");
+        });
+
+        /*──────────────── helper functions ────────────────*/
+        function populateSidebar() {
+          sidebarList.innerHTML = "";
+          slides.forEach((slide, i) => {
+            const li = document.createElement("li");
+            li.dataset.slideIndex = i;
+
+            /* title: prefer <h1> then <h2> else “Slide n” */
+            const h1 = slide.querySelector("h1");
+            const h2 = slide.querySelector("h2");
+            const title = (h1 || h2)?.textContent.trim() || `Slide ${i + 1}`;
+
+            li.innerHTML = `
+        <span class="slide-number">${i + 1}</span>
+        <div class="slide-thumbnail">${genThumb(slide)}</div>
+        <span class="slide-title">${title}</span>`;
+            sidebarList.appendChild(li);
+          });
+        }
+
+        function highlight(idx) {
+          sidebarList.querySelectorAll("li").forEach((li, i) => {
+            li.classList.toggle("active", i === idx);
+          });
+        }
+
+        function goTo(idx) {
+          if (idx < 0 || idx >= slides.length) return;
+          current = idx;
+          highlight(idx);
+          /* your deck’s own slide-switching code here */
+          document.getElementById(
+            "presentation-container"
+          ).style.transform = `translateX(-${idx * 100}vw)`;
+        }
+
+        /* icon generator – ultra-light SVG placeholders */
+        function genThumb(slide) {
+          const baseStroke =
+            "stroke:rgba(212,175,55,.4); fill:none; stroke-width:1.5;";
+          if (slide.id === "slide1")
+            // title slide
+            return `<svg viewBox="0 0 96 54"><rect x="12" y="15" width="72" height="10" style="fill:#2dd4bf;"/><rect x="24" y="32" width="48" height="5" style="${baseStroke}"/></svg>`;
+          if (slide.id === "slide19")
+            // thank-you slide
+            return `<svg viewBox="0 0 96 54"><text x="48" y="34" font-size="14" text-anchor="middle"
+              style="fill:#2dd4bf;font-weight:bold;">Thank You</text></svg>`;
+          return `<svg viewBox="0 0 96 54"><rect x="12" y="12" width="72" height="6" style="fill:#2dd4bf;stroke:none;"/>
+            <rect x="12" y="24" width="72" height="3" style="${baseStroke}"/>
+            <rect x="12" y="34" width="52" height="3" style="${baseStroke}"/></svg>`;
+        }
+      });
+    </script>
+  </body>
+</html>
